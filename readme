@@ -1,1 +1,17 @@
 code 128
+TypeScript Code128-B example
+
+Run example (Node):
+
+1) Ensure ts-node is available, or compile with tsc
+
+Using ts-node:
+  npx ts-node /workspace/examples/code128_example.ts "HELLO-128"
+
+Redirect to a file:
+  npx ts-node /workspace/examples/code128_example.ts "HELLO-128" > /workspace/hello128.svg
+
+Or transpile with TypeScript:
+  npx tsc --init --rootDir /workspace --outDir /workspace/dist --esModuleInterop --target ES2019 --module commonjs
+  npx tsc
+  node /workspace/dist/examples/code128_example.js "HELLO-128" > /workspace/hello128.svg
