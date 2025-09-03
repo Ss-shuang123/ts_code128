@@ -15,3 +15,41 @@ Or transpile with TypeScript:
   npx tsc --init --rootDir /workspace --outDir /workspace/dist --esModuleInterop --target ES2019 --module commonjs
   npx tsc
   node /workspace/dist/examples/code128_example.js "HELLO-128" > /workspace/hello128.svg
+
+HarmonyOS ArkTS (eTS): render to image.PixelMap
+
+- Add `src/code128_arkts.ets` to your ArkTS project and import:
+
+  import image from '@ohos.multimedia.image';
+  import { renderCode128BToPixelMap } from '../src/code128_arkts';
+
+- Example (inside a component):
+
+  @Entry
+  @Component
+  struct Index {
+    @State pm: image.PixelMap | null = null;
+
+    build() {
+      Column() {
+        Image(this.pm)
+          .width(300)
+          .height(100)
+          .objectFit(ImageFit.Fill);
+        Button('Generate Code128')
+          .onClick(async () => {
+            this.pm = await renderCode128BToPixelMap('HELLO-128', {
+              moduleWidth: 2,
+              height: 80,
+              quietZone: 10
+            });
+          });
+      }
+      .width('100%')
+      .height('100%');
+    }
+  }
+
+Notes
+- Requires `@ohos.multimedia.image` in HarmonyOS.
+- The ArkTS renderer draws bars only (no human-readable text) for now.
